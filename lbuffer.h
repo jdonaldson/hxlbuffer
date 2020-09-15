@@ -26,7 +26,7 @@
 #  define lua_getuservalue              lua_getfenv
 #  define lua_setuservalue              lua_setfenv
 #  define lua_rawlen                    lua_objlen
-#  define luaL_setfuncs(L,l,nups)       luaI_openlib((L),NULL,(l),(nups))
+#  define luaL_setfuncs(L,l,nups)       luaL_register((L),NULL,(l))
 #  define luaL_newlibtable(L,l)	\
     lua_createtable(L, 0, sizeof(l)/sizeof((l)[0]) - 1)
 #  define luaL_newlib(L,l) \
