@@ -1,7 +1,6 @@
 #define LUA_LIB
-#include "lbuffer.h"
-#include "lualib.h" /* for LUA_FILEHANDLE */
-
+#include "hxlbuffer.h"
+#include "hxlualib.h" /* for LUA_FILEHANDLE */
 
 #include <stdarg.h>
 #include <ctype.h>
@@ -20,15 +19,15 @@
 
 
 static size_t posrelat(lua_Integer offset, size_t len) {
-    if (offset >= 1 && (size_t)offset <= len)
-        return offset - 1;
+    if (offset >= 0 && (size_t)offset <= len)
+        return offset;
     else if (offset <= -1 && (size_t)-offset <= len)
         return offset + len;
     return offset > 0 ? len : 0;
 }
 
 static size_t rangerelat(lua_State *L, int idx, size_t *plen) {
-    size_t i = posrelat(luaL_optinteger(L, idx, 1), *plen);
+    size_t i = posrelat(luaL_optinteger(L, idx, 0), *plen);
     lua_Integer sj = luaL_optinteger(L, idx + 1, -1);
     size_t j = posrelat(sj, *plen);
     *plen = i <= j ? j - i + (sj != 0 && j != *plen) : 0;
@@ -330,7 +329,7 @@ static void apply_strarg(lb_Buffer *B, size_t pos,
     else {
         int i = 0, count = len / padlen;
         char *b = &B->b[pos];
-        if (s == b) i = 1, b += padlen;
+        if (s == b) i = 0, b += padlen;
         for (; i < count; ++i, b += padlen)
             memcpy(b, s, padlen);
         memcpy(b, s, len % padlen);
@@ -806,10 +805,10 @@ static int do_packfmt(parse_info *info, char fmt, size_t wide, int count) {
             lua_Integer i;
             if (I(pos) + wide > blen) return 0;
             if (fmt == 'u' || fmt == 'U')
-                lb_unpackuint(&I(B)->b[I(pos)], wide, 
+                lb_unpackuint(&I(B)->b[I(pos)], wide,
                         I(is_bigendian), &i);
             else
-                lb_unpackint(&I(B)->b[I(pos)], wide, 
+                lb_unpackint(&I(B)->b[I(pos)], wide,
                         I(is_bigendian), &i);
             I(pos) += wide;
             lua_pushinteger(I(B)->L, i); SINK();

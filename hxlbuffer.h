@@ -2,8 +2,8 @@
 #define LBUFFER_H
 
 
-#define LB_LIBNAME "buffer"
-#define LB_VERSION "0.2"
+#define LB_LIBNAME "hxbuffer"
+#define LB_VERSION "0.1"
 
 
 #include <lua.h>
@@ -117,4 +117,4 @@ LB_API int lb_unpack (lua_State *L, const char *s, size_t n, const char *fmt);
 #endif /* LB_REPLACE_LUA_API */
 
 
-#endif /* LBUFFER_H */
+#endif /* HXLBUFFER_H */

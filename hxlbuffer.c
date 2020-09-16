@@ -1,5 +1,5 @@
 #define LUA_LIB
-#include "lbuffer.h"
+#include "hxlbuffer.h"
 
 
 #include <string.h>

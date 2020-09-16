@@ -11,7 +11,7 @@ MACOSX_VERSION = 10.4
 PLAT = none
 DEFS =
 CMOD = buffer.so
-OBJS = lbuffer.o lbufflib.o
+OBJS = hxlbuffer.o hxlbufflib.o
 
 LIBS = -llua
 WARN = -Wall -pedantic
